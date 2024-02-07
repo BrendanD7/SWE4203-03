@@ -1,5 +1,5 @@
 # Client-Server Tic-Tac-Toe
-The 2020-2021 SWE4203 lab project!
+The 2023-2024 SWE4203 Project
 
 ## Compilation
 You will need to [install Java](https://www3.ntu.edu.sg/home/ehchua/programming/howto/JDK_Howto.html) before you can compile/run this application. Once installed, just run `javac`.
