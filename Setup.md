@@ -7,10 +7,12 @@ javac src/*.java
 ```
 
 ## Running
-Just run the `Main.java` file!
+To start the game, run the following command: `Main.java`
+
+Optionally pass in the port e.g. java Main 5000
 ```
 cd src
-java Main # optionally pass in the port e.g. java Main 5000
+java Main 
 ```
 
 This will start a server at [`localhost:3000`](http://localhost:3000) if you used the default port. To play against yourself, you will need to open two instances of the application. In the first instance, click `"Host Game"` and then copy the access code that appeared. In the second window, paste the access code in the `Access Code` field and then click `"Find Game"`. After, you will be able to take turns placing your markers. 
@@ -42,13 +44,13 @@ This project defines a `swagger.yml` file which can be converted into a website 
 
 To view this information, open up `index.html` in the browser of your choice. Alternatively, go to the [Swagger Editor](https://editor.swagger.io/), copy the contents of `swagger.yml` and paste the contents in the online editor.
 
-<!-- #### Generation
-First, ensure `redoc-cli` is installed.
+#### Swagger Generation
+First, ensure `redoc-cli` is installed, if it is not run the following command in your terminal: 
 ```
 npm install -g redoc-cli
 ```
 
-Next, run:
+Once redoc-cli is installed, run the following command in the terminal to generate the index.html file:
 ```
 redoc-cli bundle -o index.html swagger.yml
-``` -->
+```
