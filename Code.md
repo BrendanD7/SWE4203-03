@@ -98,4 +98,37 @@ This class configures the game by creating a game manager, and a Server for endp
 
 <hr>
 
-# Control Flow Diagram
+# Front End Documentation
+
+## Control Flow Diagram
+Below is a diagram represting a flow of HTTP request when the game is being played. 
+
+> Note that The circles represent the players, squares represent method usage, and diamonds represent choice trees.
+
+![UML Diagram of System](Images/ControlFlow.png)
+
+### Breakdown of System
+The front end is built using a combination of HTML, CSS, and Javascript. 
+
+The CSS uses bootstrap to provide simplified and expanded options for in-line CSS styling.
+
+The display of the game is handled in `index.html` and `index.js` handles interaction with the system, such as processing user input, issuing and receiving HTTP requests, and displaying errors.
+
+#### Methods
+- `disableConnectionButton()`
+    - This method will disable connection buttons when a player joins a game.
+- `enableConnectionButton()`
+    - This method will enable connection buttons to allow a player to host or join a game.
+- `hostGame()`
+    - This method will issue an HTTP request to the server to retrieve an access code and start a game. If successful, the access code is displayed, and the player waits for an opponent to join
+- `findGame()`
+    - This method will issue an HTTP request to the server with an access code to let an opponent player join a game. If it is successful, connection buttles are disabled and the game begins.
+- `placeMarker(x,y,state)`
+    - This method allows a player to place a marker on the board by editing the view of the display to add the marker. This is called when a successful move is made.
+- `makePlay(x,y)`
+    - This method will issue an HTTP request to the server to attempt to play a move at the given x,y position. if invalid, an error is displayed. When successful, the player's marker is added to the board
+- `resetGame()`
+    - This method will reset the game to the beginning, by clearing the board, and resetting connections.
+- `get(url, onSuccess)`
+    - This method handles issuing get requests to the server, as well as handling the responses when they are returned.
+
