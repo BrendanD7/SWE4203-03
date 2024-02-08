@@ -36,6 +36,16 @@ In the second instance, paste the access code in the `Access Code` field and the
 
 > Remember, the host always goes first!
 
+## Makefile
+The code also provides a makefile with simplifies the process of compiling and running the code. 
+
+With the terminal open and in the root directory of the project enter the following commands:
+```
+make build
+make serve args="3000"
+make clean
+```
+
 ## Hot-Reload Development
 Hot Reload will automatically reflect changes to the source code by recompiling, and rerunning the code to reflect the changes. This will ensure that you do not have to close the app, recompile, and rerun with each change manually.
 
