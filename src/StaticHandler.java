@@ -13,10 +13,16 @@ class StaticHandler extends FileHandler {
    */
   final private String rootURI;
 
+  /** Constructor to create a StaticHandler
+   * @param rootURI The URI to handle
+   */
   StaticHandler(String rootURI) {
     this.rootURI = rootURI;
   }
 
+  /** Method to retrieve a path from an HTTP Exchange
+   * @param exchange The HTTP Exchange to retrieve a path from
+   */
   @Override
   protected Path getPath(HttpExchange exchange) {
     final URI requestURI = exchange.getRequestURI();

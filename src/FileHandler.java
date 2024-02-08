@@ -25,10 +25,12 @@ abstract class FileHandler implements HttpHandler {
    * @param exchange The HttpExchange object.
    */
   public void handle(HttpExchange exchange) throws IOException {
+    // Retrieve File path and body from exchange
     final Path filePath = this.getPath(exchange);
     final OutputStream body = exchange.getResponseBody();
 
     final File file = filePath.toFile();
+    // If the file does not exist, issue an error
     if (!file.exists()) {
       byte[] response = ("File not found").getBytes();
       exchange.sendResponseHeaders(404, response.length);
@@ -37,6 +39,7 @@ abstract class FileHandler implements HttpHandler {
       return;
     }
 
+    // Handle creation of response
     final FileInputStream stream = new FileInputStream(file);
     final byte[] response = new byte[(int) file.length()];
     stream.read(response);

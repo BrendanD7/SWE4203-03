@@ -3,11 +3,13 @@ import java.util.logging.Logger;
 import java.net.InetSocketAddress;
 import com.sun.net.httpserver.HttpServer;
 
+/** Main Class, Defines endpoints and configures the game */
 class Main {
   private final static Logger log = Logger.getLogger(Main.class.getName());
 
   public static void main(String args[]) throws IOException {
     int port = 3000;
+    // Handle port arguments
     if (args.length > 0) {
       try {
         port = Integer.parseInt(args[0]);
@@ -17,6 +19,7 @@ class Main {
       }
     }
 
+    // Create Server and configure endpoints
     Main.log.info("Running at -> http://localhost:" + port);
     HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
     server.createContext("/", new TemplateHandler("static/index.html"));

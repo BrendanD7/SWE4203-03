@@ -3,19 +3,23 @@ import java.io.OutputStream;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+/** Enum to represent possible markers on the board */
 enum State {
   X, O, EMPTY
 }
 
+/** Enum to represent player markers on the board */
 enum PlayableState {
   X, O
 }
 
+/** Enum to represent player types */
 enum Player {
   HOST,
   OPPONENT,
 }
 
+/** Enum to represent Results of moves */
 enum PlayResult {
   NOT_YOUR_TURN,
   OUT_OF_BOUNDS,
@@ -39,6 +43,7 @@ class Game implements Disposer {
   private boolean finished = false;
   private int count = 0;
 
+  /** Constructor to Create a Game Object */
   Game() {
     State[] row1 = { State.EMPTY, State.EMPTY, State.EMPTY };
     State[] row2 = { State.EMPTY, State.EMPTY, State.EMPTY };
@@ -113,16 +118,24 @@ class Game implements Disposer {
     }
   }
 
+  /** Method to check if the game has a host 
+   * @return True if there is a host, false otherwise
+   */
   public boolean hasHost() {
     return this.host.isPresent();
   }
 
+  /** Method to check if the game has an opponent
+   * @return True if the game has an opponent, false otherwise
+   */
   public boolean hasOpponent() {
     return this.opponent.isPresent();
   }
 
   /**
-   * Set the host.
+   * Set the host of the game.
+   * @param host The host to set for the game
+   * @return True if the host has been set, false otherwise
    */
   public boolean setHost(OutputStream host) {
     if (this.host.isPresent()) {
@@ -134,7 +147,9 @@ class Game implements Disposer {
   }
 
   /**
-   * Set the opponent.
+   * Set the opponent of the game.
+   * @param opponent The opponent to set for the game
+   * @return True if the opponent has been set, false otherwise
    */
   public boolean setOpponent(OutputStream opponent) {
     if (this.opponent.isPresent()) {
@@ -153,11 +168,17 @@ class Game implements Disposer {
     this.opponent.ifPresent(Utils::tryToClose);
   }
 
+  /** Check if the game is complete, by either having a win or all spaces filled */
   private void checkFinished() {
     this.finished = this.checkWon(State.X) || this.checkWon(State.O) || this.count == 9;
   }
 
+  /** Check if the game is a win for a given player
+   * @param state The marker to check for (X,Y)
+   * @return True if the player has won, false otherwise.
+   */
   private boolean checkWon(State state) {
+    // Check if player has a line of three horizontally
     for (int i = 0; i < 3; i++) {
       if (
         this.game[i][0] == state &&
@@ -168,6 +189,7 @@ class Game implements Disposer {
       }
     }
 
+    // Check if player has a line of three vertically
     for (int j = 0; j < 3; j++) {
       if (
         this.game[0][j] == state &&
@@ -178,6 +200,7 @@ class Game implements Disposer {
       }
     }
 
+    // Check if player has a line diagonally 
     if (
       this.game[0][0] == state &&
       this.game[1][1] == state &&
@@ -185,7 +208,7 @@ class Game implements Disposer {
     ) {
       return true;
     }
-
+    // Check if player has a line diagonally 
     if (
       this.game[2][2] == state &&
       this.game[1][1] == state &&
