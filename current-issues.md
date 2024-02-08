@@ -26,3 +26,4 @@
 6. In the Console logging, it often specifies that a player played "EMPTY" at x, y. Which should not be a valid option, should be either X or O
 7. The code to check if a game is won only checks one diagonal option twice, (0,0) (1,1) (2,2) and does not check the other, (0,2) (1,1) (2,0). As such, a diagonal victory will never be found for the one direction
 8. On placement conflicts, the player is still swapped. Rather than letting the player who made the error, choose a new position.
+9. When a Player leaves the game room, the other player is never notified, and can continue playing without the other player.
