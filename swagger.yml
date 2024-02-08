@@ -1,23 +1,23 @@
 swagger: "2.0"
 info:
-  description: "The Swagger docs for the Tic-Tac-Toe server."
+  description: "Developer Documentation for the Tic-Tac-Toe API For SWE4203"
   version: "1.0.0"
   title: "Server Tic-Tac-Toe API"
 host: "localhost:3000"
 basePath: "/api"
 tags:
-- name: "setup"
-  description: "Everything about the setup process"
-- name: "gameplay"
-  description: "Everything about the gameplay"
+- name: "Game Setup"
+  description: "Requests related to the setup process, allows users to configure games and connections"
+- name: "Gameplay Actions"
+  description: "Requests related to gameplay, allows users make moves in the game"
 schemes:
 - "http"
 paths:
   /start-server:
     get:
       tags:
-      - "setup"
-      summary: "Start a new Tic-Tac-Toe game!"
+      - "Game Setup"
+      summary: "Start a new Tic-Tac-Toe game by opening a server and generating an access code"
       operationId: "startGame"
       produces:
       - "application/json"
@@ -29,19 +29,19 @@ paths:
   /search-for-game:
     get:
       tags:
-      - "setup"
-      summary: "Find a Tic-Tac-Toe game!"
+      - "Game Setup"
+      summary: "Find a Tic-Tac-Toe game with an access code"
       operationId: "findGame"
       produces:
       - "application/json"
       parameters:
       - name: "accessCode"
         in: "query"
-        description: "The access code."
+        description: "The access code of a server"
         type: "string"
       responses:
         400:
-          description: "Error finding game."
+          description: "Error finding a game"
           schema:
             type: "object"
             properties:
@@ -56,7 +56,7 @@ paths:
                 type: "string"
                 enum: [NO_ACCESS_CODE, ACCESS_CODE_INVALID]
         200:
-          description: "Success finding game."
+          description: "Success finding game, a game has been found"
           schema:
             type: "object"
             properties:
@@ -70,18 +70,18 @@ paths:
                 type: "object"
                 properties:
                   accessCode:
-                    description: "The 4 digit code used to find a game."
+                    description: "The 4 digit access code used to find a game."
                     example: "AD3R"
                     type: "string"
   /join-as-host:
     get:
       tags:
-      - "setup"
-      summary: "Join the game as the host."
+      - "Game Setup"
+      summary: "Join a game as the host."
       parameters:
       - name: "gameCode"
         in: "query"
-        description: "The game code."
+        description: "The game's access code."
         type: "string"
       responses:
         400:
@@ -95,7 +95,7 @@ paths:
   /join-as-opponent:
     get:
       tags:
-      - "setup"
+      - "Game Setup"
       summary: "Join the game as the opponent."
       parameters:
       - name: "gameCode"
@@ -112,7 +112,7 @@ paths:
   /move:
     get:
       tags:
-      - "gameplay"
+      - "Gameplay Actions"
       summary: "Place an \"X\" or an \"O\"."
       parameters:
       - name: "x"

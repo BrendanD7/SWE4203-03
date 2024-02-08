@@ -9,7 +9,7 @@
 3. Access code text box does not ignore leading spaces, and copying the access code directly often inputs a space before the code.
 4. When the game is complete, the users have to press reset to start from the beginning. This closes the connection and requires the players to create a new connection. Ideally, the reset button could reset the board and keep the connection live.
 5. When a player selects "Host Game" it starts by saying it is their move, before another player joins. It should display a header indicating that the game is waiting for another player before indicating it is their move.
-6. The game requires the host to always go first, in Tic-Tac-Toe this is a massive advantage, as such the first move should be decided randomly when a player joins.
+6. The game requires the host to always go first, in Tic-Tac-Toe this is a massive advantage, as such the first move should be decided randomly when a player joins by giving the X and O to players randomly.
 7. The X and O symbols are slightly too high within the box, they could be centered better.
 8. The Console Logging is often unclear or incorrect, when a user makes an invalid move, it is logged as "Move" rather than an error message. The detailed information on valid moves, and players joining works well. 
 9. When reset is pressed, the access code is not cleared from the text box. This is not an issue if perfective issue 4 is resolved.
