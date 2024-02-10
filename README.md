@@ -16,3 +16,5 @@
 ## [API Documentation](https://brendand7.github.io/SWE4203-03/)
 
 ## [User Guide](Tic-Tac-Toe_UserGuide.pdf)
+
+## [Issue Log](current-issues.md)
