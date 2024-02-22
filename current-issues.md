@@ -21,9 +21,9 @@
 1. "Your Move" "Opponent Move" Header does not always reflect who's move it is, or the proper state of the game.
 2. Header after game completion specifies "No Winner for this Game", even if a player has won.
 3. Occasionally a player can move multiple times in a row
-4. Occasionally, a player can not place an X or an O in certain positions, especially the center due to "Placement Conflict"
-5. Occasionally the game will end early, before a line of three is made, or all spaces are filled.
-6. In the Console logging, it often specifies that a player played "EMPTY" at x, y. Which should not be a valid option, should be either X or O
-7. The code to check if a game is won only checks one diagonal option twice, (0,0) (1,1) (2,2) and does not check the other, (0,2) (1,1) (2,0). As such, a diagonal victory will never be found for the one direction
+4. ~~Occasionally, a player can not place an X or an O in certain positions, especially the center due to "Placement Conflict"~~
+5. ~~Occasionally the game will end early, before a line of three is made, or all spaces are filled.~~
+6. ~~In the Console logging, it often specifies that a player played "EMPTY" at x, y. Which should not be a valid option, should be either X or O~~
+7. ~~The code to check if a game is won only checks one diagonal option twice, (0,0) (1,1) (2,2) and does not check the other, (0,2) (1,1) (2,0). As such, a diagonal victory will never be found for the one direction~~
 8. On placement conflicts, the player is still swapped. Rather than letting the player who made the error, choose a new position.
 9. When a Player leaves the game room, the other player is never notified, and can continue playing without the other player.

@@ -91,7 +91,7 @@ class Game implements Disposer {
     if (player == Player.HOST) {
       this.game[x][y] = State.X;
     } else {
-      this.game[y][y] = State.O;
+      this.game[x][y] = State.O;
     }
 
     Game.log.info(player.toString() + " played " + this.game[x][y].toString() + " at " + x + ", " + y);
@@ -200,7 +200,7 @@ class Game implements Disposer {
       }
     }
 
-    // Check if player has a line diagonally 
+    // Check if player has a line diagonally (Top-left to bottom right)
     if (
       this.game[0][0] == state &&
       this.game[1][1] == state &&
@@ -208,11 +208,11 @@ class Game implements Disposer {
     ) {
       return true;
     }
-    // Check if player has a line diagonally 
+    // Check if player has a line diagonally (Top right to bottom left)
     if (
-      this.game[2][2] == state &&
+      this.game[0][2] == state &&
       this.game[1][1] == state &&
-      this.game[0][0] == state
+      this.game[2][0] == state
     ) {
       return true;
     }
