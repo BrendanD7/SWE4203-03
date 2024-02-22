@@ -27,6 +27,8 @@ enum PlayResult {
   PLACEMENT_CONFLICT,
   GAME_FINISHED,
   GAME_NOT_FINISHED,
+  GAME_FINISHED_HOST_WIN,
+  GAME_FINISHED_OPPONENT_WIN
 }
 
 /**
@@ -41,6 +43,7 @@ class Game implements Disposer {
   private Optional<OutputStream> opponent = Optional.empty();
   private Player next = Player.HOST;
   private boolean finished = false;
+  private String winner = "NONE";
   private int count = 0;
 
   /** Constructor to Create a Game Object */
@@ -91,15 +94,18 @@ class Game implements Disposer {
     if (player == Player.HOST) {
       this.game[x][y] = State.X;
     } else {
-      this.game[y][y] = State.O;
+      this.game[x][y] = State.O;
     }
+
+    this.checkFinished();
 
     Game.log.info(player.toString() + " played " + this.game[x][y].toString() + " at " + x + ", " + y);
     String message = String.format(
-      "data: { \"location\": [%d, %d], \"gameOver\": %s }\n\n", 
+      "data: { \"location\": [%d, %d], \"gameOver\": %s, \"winner\": \"%s\"}\n\n", 
       x,
       y,
-      this.finished
+      this.finished,
+      this.winner
     );
 
     try {
@@ -109,11 +115,18 @@ class Game implements Disposer {
       Game.log.severe("Unknown IOException while writing to SSE stream: " + e.toString());
     }
 
-    this.checkFinished();
-
     if (this.finished) {
-      return PlayResult.GAME_FINISHED;
-    } else {
+      if(winner.equals("NONE")){
+        return PlayResult.GAME_FINISHED;
+      }
+      else if(winner.equals("HOST")){
+        return PlayResult.GAME_FINISHED_HOST_WIN;
+      }
+      else {
+        return PlayResult.GAME_FINISHED_OPPONENT_WIN;
+      }
+    } 
+    else {
       return PlayResult.GAME_NOT_FINISHED;
     }
   }
@@ -170,7 +183,20 @@ class Game implements Disposer {
 
   /** Check if the game is complete, by either having a win or all spaces filled */
   private void checkFinished() {
-    this.finished = this.checkWon(State.X) || this.checkWon(State.O) || this.count == 9;
+    boolean xWon = this.checkWon(State.X);
+    boolean oWon = this.checkWon(State.O);
+    this.finished = xWon || oWon || this.count == 9;
+    if(this.finished){
+        if(xWon){
+            winner = "HOST";
+        }
+        else if(oWon){
+          winner = "OPPONENT";
+        }
+        else{
+          winner = "NONE";
+        }
+    }
   }
 
   /** Check if the game is a win for a given player
@@ -200,7 +226,7 @@ class Game implements Disposer {
       }
     }
 
-    // Check if player has a line diagonally 
+    // Check if player has a line diagonally (Top-left to bottom right)
     if (
       this.game[0][0] == state &&
       this.game[1][1] == state &&
@@ -208,11 +234,11 @@ class Game implements Disposer {
     ) {
       return true;
     }
-    // Check if player has a line diagonally 
+    // Check if player has a line diagonally (Top right to bottom left)
     if (
-      this.game[2][2] == state &&
+      this.game[0][2] == state &&
       this.game[1][1] == state &&
-      this.game[0][0] == state
+      this.game[2][0] == state
     ) {
       return true;
     }

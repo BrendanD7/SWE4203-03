@@ -120,9 +120,9 @@ class GameManager implements Disposer {
     // Make a move
     PlayResult result = game.play(player, x, y);
 
-    // GAME_FINISHED and GAME_NOT_FINISHED are not error states
+    // GAME_FINISHED and GAME_NOT_FINISHED and Player Wins are not error states
     // the rest are and should return 400 errors
-    if (result != PlayResult.GAME_FINISHED && result != PlayResult.GAME_NOT_FINISHED) {
+    if (result != PlayResult.GAME_FINISHED && result != PlayResult.GAME_NOT_FINISHED && result != PlayResult.GAME_FINISHED_HOST_WIN && result != PlayResult.GAME_FINISHED_OPPONENT_WIN) {
       throw new HttpError400(result.toString());
     }
 
@@ -131,7 +131,17 @@ class GameManager implements Disposer {
     if (result == PlayResult.GAME_FINISHED) {
       this.games.remove(game);
       response.put("gameOver", true);
-    } else {
+    } else if(result == PlayResult.GAME_FINISHED_HOST_WIN){
+      this.games.remove(game);
+      response.put("gameOver", true);
+      response.put("winner", "HOST");
+    }
+    else if(result == PlayResult.GAME_FINISHED_OPPONENT_WIN){
+      this.games.remove(game);
+      response.put("gameOver", true);
+      response.put("winner", "OPPONENT");
+    }
+    else {
       response.put("gameOver", false);
     }
 
