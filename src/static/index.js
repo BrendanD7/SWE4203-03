@@ -109,8 +109,8 @@ const createSource = (url) => {
 
   source.onerror = (event) => {
     console.log(event);
-    errorAlert.innerText = "An error occurred during the SSE.";
-    resetGame(); // this will close the event source
+    showErrorAlert("An error occurred while connecting the game, please try and start another game.", 5000);
+    resetGame();
   }
 
   source.onmessage = (event) => {
@@ -200,7 +200,7 @@ const placeMarker = async (x, y, state) => {
  */
 const makePlay = async (x, y) => {
   if (!gameState) {
-    errorAlert.innerText = "The game has not yet started!";
+    showErrorAlert("The game has not yet started!", 5000);
     return;
   }
 
@@ -268,15 +268,42 @@ const get = async (url, onSuccess) => {
     json = await response.json();
   } catch (e) {
     console.error(`Invalid json while fetching ${url}: ${e}`);
-    errorAlert.innerText = `Bad JSON from ${url}: ${response.text()}`;
+    showErrorAlert(`Bad JSON from ${url}: ${response.text()}`, 5000)
     return;
   }
 
   if (json.result === "error") {
-    errorAlert.innerText = `Bad request to ${url}: ${json.error}`;
+    console.error(`Bad request to ${url}: ${json.error}`);
+    switch(json.error){
+      case "PLACEMENT_CONFLICT":
+        showErrorAlert("Placement Conflict: There is already a marker here, pick another position.", 5000);
+        break;
+      case "NOT_YOUR_TURN":
+        showErrorAlert("It is not your turn, wait until the opponent makes their turn.", 5000);
+        break;
+      case "NO_GAME_FOUND":
+        showErrorAlert("The current game has been completed. Please start another game to play again.", 5000);
+        break;
+      case "NO_OPPONENT":
+        showErrorAlert("No Opponent has joined yet!", 5000);
+        break;
+      default:
+        break;
+    }
     return;
   }
-
+  
   console.log(`Data from ${url}: `, json.data);
   await onSuccess(json.data);
 }
+
+/** Method to display an error message which will timeout after the given timeout value */
+const showErrorAlert = (message, timeout) => {
+  // Display the error message
+  errorAlert.innerText = message;
+
+  // Set a timeout to hide the error message after the specified duration
+  setTimeout(() => {
+    errorAlert.innerText = "";
+  }, timeout);
+};
