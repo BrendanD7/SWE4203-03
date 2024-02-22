@@ -4,7 +4,7 @@
 2. 
 
 ## Perfective Issues
-1. Error messages are not user friendly, should not specify API endpoint for code related issues. Should state an easily understandable error message such as "Placement Conflict" or "It is not your turn"
+1. ~~Error messages are not user friendly, should not specify API endpoint for code related issues. Should state an easily understandable error message such as "Placement Conflict" or "It is not your turn"~~
 2. The access code is not clear or labelled. It appears unlabelled after host game is selected.
 3. Access code text box does not ignore leading spaces, and copying the access code directly often inputs a space before the code.
 4. When the game is complete, the users have to press reset to start from the beginning. This closes the connection and requires the players to create a new connection. Ideally, the reset button could reset the board and keep the connection live.
@@ -18,12 +18,12 @@
 12. The UI layout does not update properly to changing window sizes, the access code box can be reduced to being invisible. The content does not re-align vertically in most cases.
 
 ## Corrective Issues
-1. "Your Move" "Opponent Move" Header does not always reflect who's move it is, or the proper state of the game.
-2. Header after game completion specifies "No Winner for this Game", even if a player has won.
+1. ~~"Your Move" "Opponent Move" Header does not always reflect who's move it is, or the proper state of the game.~~
+2. ~~Header after game completion specifies "No Winner for this Game", even if a player has won.~~
 3. Occasionally a player can move multiple times in a row
-4. Occasionally, a player can not place an X or an O in certain positions, especially the center due to "Placement Conflict"
-5. Occasionally the game will end early, before a line of three is made, or all spaces are filled.
-6. In the Console logging, it often specifies that a player played "EMPTY" at x, y. Which should not be a valid option, should be either X or O
-7. The code to check if a game is won only checks one diagonal option twice, (0,0) (1,1) (2,2) and does not check the other, (0,2) (1,1) (2,0). As such, a diagonal victory will never be found for the one direction
+4. ~~Occasionally, a player can not place an X or an O in certain positions, especially the center due to "Placement Conflict"~~
+5. ~~Occasionally the game will end early, before a line of three is made, or all spaces are filled.~~
+6. ~~In the Console logging, it often specifies that a player played "EMPTY" at x, y. Which should not be a valid option, should be either X or O~~
+7. ~~The code to check if a game is won only checks one diagonal option twice, (0,0) (1,1) (2,2) and does not check the other, (0,2) (1,1) (2,0). As such, a diagonal victory will never be found for the one direction~~
 8. On placement conflicts, the player is still swapped. Rather than letting the player who made the error, choose a new position.
 9. When a Player leaves the game room, the other player is never notified, and can continue playing without the other player.
